@@ -2,7 +2,7 @@ package osext
 
 import (
 	"unsafe"
-	"utf16"
+	"unicode/utf16"
 )
 
 var (
