@@ -3,6 +3,7 @@ package osext
 import (
 	"unsafe"
 	"unicode/utf16"
+	"syscall"
 )
 
 var (
