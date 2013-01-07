@@ -1,8 +1,32 @@
+// Copyright 2012 The Go Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
+// Extensions to the standard "os" package.
 package osext
 
-// Returns the full path of the running executable
-// as reported by the system. Includes the executable
-// image name.
+import "path/filepath"
+
+// Executable returns an absolute path that can be used to
+// re-invoke the current program.
+// It may not be valid after the current program exits.
+func Executable() (string, error) {
+	return executable()
+}
+
+// Returns same path as Executable, returns just the folder
+// path. Excludes the executable name.
+func ExecutableFolder() (string, error) {
+	p, err := executable()
+	if err != nil {
+		return "", err
+	}
+	folder, _ := filepath.Split(p)
+	return folder, nil
+}
+
+// Same as Executable().
+// New code should use Executable().
 func GetExePath() (exePath string, err error) {
-	return getExePath()
+	return executable()
 }
