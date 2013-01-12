@@ -11,13 +11,14 @@ import "path/filepath"
 // re-invoke the current program.
 // It may not be valid after the current program exits.
 func Executable() (string, error) {
-	return executable()
+	p, err := executable()
+	return filepath.Clean(p), err
 }
 
 // Returns same path as Executable, returns just the folder
 // path. Excludes the executable name.
 func ExecutableFolder() (string, error) {
-	p, err := executable()
+	p, err := Executable()
 	if err != nil {
 		return "", err
 	}
@@ -25,8 +26,7 @@ func ExecutableFolder() (string, error) {
 	return folder, nil
 }
 
-// Same as Executable().
-// New code should use Executable().
+// Depricated. Same as Executable().
 func GetExePath() (exePath string, err error) {
-	return executable()
+	return Executable()
 }
