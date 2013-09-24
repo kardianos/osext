@@ -8,6 +8,7 @@ package osext
 
 import (
 	"os"
+	"path/filepath"
 	"runtime"
 	"syscall"
 	"unsafe"
@@ -45,6 +46,13 @@ func executable() (string, error) {
 		if v == 0 {
 			buf = buf[:i]
 			break
+		}
+	}
+	if runtime.GOOS == "darwin" {
+		if strpath, err := filepath.EvalSymlinks(string(buf)); err != nil {
+			return strpath, err
+		} else {
+			buf = []byte(strpath)
 		}
 	}
 	if buf[0] != '/' {
