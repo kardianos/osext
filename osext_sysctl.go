@@ -48,25 +48,35 @@ func executable() (string, error) {
 			break
 		}
 	}
-	if runtime.GOOS == "darwin" {
-		if strpath, err := filepath.EvalSymlinks(string(buf)); err != nil {
-			return strpath, err
-		} else {
-			buf = []byte(strpath)
-		}
-	}
+	var strpath string
 	if buf[0] != '/' {
-		if getwdError != nil {
-			return string(buf), getwdError
-		} else {
-			if buf[0] == '.' {
-				buf = buf[1:]
-			}
-			if startUpcwd[len(startUpcwd)-1] != '/' {
-				return startUpcwd + "/" + string(buf), nil
-			}
-			return startUpcwd + string(buf), nil
+		var e error
+		if strpath, e = getAbs(buf); e != nil {
+			return strpath, e
+		}
+	} else {
+		strpath = string(buf)
+	}
+	// darwin KERN_PROCARGS may return the path to a symlink rather than the
+	// actual executable
+	if runtime.GOOS == "darwin" {
+		if strpath, err := filepath.EvalSymlinks(strpath); err != nil {
+			return strpath, err
 		}
 	}
-	return string(buf), nil
+	return strpath, nil
+}
+
+func getAbs(buf []byte) (string, error) {
+	if getwdError != nil {
+		return string(buf), getwdError
+	} else {
+		if buf[0] == '.' {
+			buf = buf[1:]
+		}
+		if startUpcwd[len(startUpcwd)-1] != '/' && buf[0] != '/' {
+			return startUpcwd + "/" + string(buf), nil
+		}
+		return startUpcwd + string(buf), nil
+	}
 }
