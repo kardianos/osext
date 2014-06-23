@@ -51,6 +51,7 @@ func executable() (string, error) {
 	var err error
 	execPath := string(buf)
 	// execPath will not be empty due to above checks.
+	// Try to get the absolute path if the execPath is not rooted.
 	if execPath[0] != '/' {
 		execPath, err = getAbs(execPath)
 		if err != nil {
@@ -71,5 +72,8 @@ func getAbs(execPath string) (string, error) {
 	if initCwdErr != nil {
 		return execPath, initCwdErr
 	}
+	// The execPath may begin with a "../" or a "./" so clean it first.
+	// Join the two paths, trailing and starting slashes undetermined, so use
+	// the generic Join function.
 	return filepath.Join(initCwd, filepath.Clean(execPath)), nil
 }
