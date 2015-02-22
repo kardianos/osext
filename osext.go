@@ -3,7 +3,7 @@
 // license that can be found in the LICENSE file.
 
 // Extensions to the standard "os" package.
-package osext
+package osext // import "github.com/kardianos/osext"
 
 import "path/filepath"
 
@@ -24,9 +24,4 @@ func ExecutableFolder() (string, error) {
 	}
 	folder, _ := filepath.Split(p)
 	return folder, nil
-}
-
-// Depricated. Same as Executable().
-func GetExePath() (exePath string, err error) {
-	return Executable()
 }
