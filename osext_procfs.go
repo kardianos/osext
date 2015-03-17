@@ -23,7 +23,7 @@ func executable() (string, error) {
 			return execpath, err
 		}
 		if strings.HasSuffix(execpath, deletedSuffix) {
-			execpath = execpath[:len(execpath)-len(deletedSuffix)]
+			execpath = strings.TrimSuffix(execpath, deletedSuffix)
 		}
 		return execpath, nil
 	case "netbsd":
