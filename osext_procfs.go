@@ -17,13 +17,13 @@ import (
 func executable() (string, error) {
 	switch runtime.GOOS {
 	case "linux":
-		const deleteSuffix = " (deleted)"
+		const deletedSuffix = " (deleted)"
 		execpath, err := os.Readlink("/proc/self/exe")
 		if err != nil {
 			return execpath, err
 		}
-		if strings.HasSuffix(execpath, deleteSuffix) {
-			execpath = execpath[:len(execpath)-len(deleteSuffix)]
+		if strings.HasSuffix(execpath, deletedSuffix) {
+			execpath = execpath[:len(execpath)-len(deletedSuffix)]
 		}
 		return execpath, nil
 	case "netbsd":

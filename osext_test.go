@@ -69,7 +69,6 @@ func TestExecutableDelete(t *testing.T) {
 	stderrBuff := &bytes.Buffer{}
 	stdoutBuff := &bytes.Buffer{}
 	cmd := &exec.Cmd{
-		Dir:    filepath.Dir(filepath.Dir(fpath)),
 		Path:   fpath,
 		Env:    []string{fmt.Sprintf("%s=%s", executableEnvVar, executableEnvValueDelete)},
 		Stdin:  r,
