@@ -22,10 +22,7 @@ func executable() (string, error) {
 		if err != nil {
 			return execpath, err
 		}
-		if strings.HasSuffix(execpath, deletedSuffix) {
-			execpath = strings.TrimSuffix(execpath, deletedSuffix)
-		}
-		return execpath, nil
+		return strings.TrimSuffix(execpath, deletedSuffix), nil
 	case "netbsd":
 		return os.Readlink("/proc/curproc/exe")
 	case "openbsd", "dragonfly":
