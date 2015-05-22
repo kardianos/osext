@@ -22,6 +22,5 @@ func ExecutableFolder() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	folder, _ := filepath.Split(p)
-	return folder, nil
+	return filepath.Dir(p), nil
 }
