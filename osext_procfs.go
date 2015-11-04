@@ -27,6 +27,8 @@ func executable() (string, error) {
 		return execpath, nil
 	case "netbsd":
 		return os.Readlink("/proc/curproc/exe")
+	case "dragonfly":
+		return os.Readlink("/proc/curproc/file")
 	case "solaris":
 		return os.Readlink(fmt.Sprintf("/proc/%d/path/a.out", os.Getpid()))
 	}
