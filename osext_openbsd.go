@@ -73,7 +73,6 @@ func executable() (string, error) {
 		execPath, err = getAbs(execPath)
 		if err == nil {
 			break
-
 		}
 		break
 	}
