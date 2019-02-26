@@ -21,7 +21,7 @@ func Executable() (string, error) {
 	return cx, ce
 }
 
-// Returns same path as Executable, returns just the folder
+// ExecutableFolder returns same path as Executable, returns just the folder
 // path. Excludes the executable name and any trailing slash.
 func ExecutableFolder() (string, error) {
 	p, err := Executable()
